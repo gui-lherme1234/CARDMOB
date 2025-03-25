@@ -5,6 +5,7 @@ import "./App.css";
 import Counter from "./components/Counter";
 import Photo from "./components/photo";
 import Album from "./components/album";
+import TodoList from "./components/TodoList";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <>
+      <TodoList name="CARDMOB"/>
       <Counter title="Contando..."/>
       <Counter initial="100"/>
       {/* <article>
