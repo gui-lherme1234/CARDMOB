@@ -1,58 +1,117 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { TextInput } from 'react-native-web';
+import { StyleSheet, Text, View, Button, Image, TextInput, FlatList } from 'react-native';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [counter, setCounter] = useState(0);
+// CRUD em memoria
+const [text, setText] = useState('');
+const [editItem, setEditItem] = useState(null);
+const [editItemText, setEditItemText] = useState('');
 
-  const incrementCounter = () => {
-    setCount(count + 1);
-  };
 
-  const decrementCounter = () => {
-    setCount(count - 1);
-  };
+const incrementCounter = () => {
+  setCounter(counter + 1);
+};
 
-  const addItem = () => {
-    if (text.trim() === '') {
-      return;
-    }
-    const newItem = {
-      id: Math.random().toString(),
-      text: text.trim()
-    }
-    setitem([...items, newItem]);
-    setText('');
-    console.log(items);
+const decrementCounter = () => {
+  setCounter(counter - 1);
+};
+
+//CREATE
+const addItem = () => {
+  if (text.trim() === '') {
+    return;
   }
 
+// UPDATE
+const updatedItems = (id) => {
+  setItems( items.map(item => {
+    if (item.id === id) {
+      return { ...item, text: editItemText };
+    }
+    return item;
+  }));
+  setEditItem(null);
+  setEditItemText('');
+}
+
+  const newItem = {
+    id: Math.random().toString(),
+    text: text.trim(),
+  }
+  setItems([...items, newItem]);
+  setText('');
+  console.log(items);
+
+}
+
+// DELETE
+const deleteItem = (id) => {
+  setItems(items.filter(item => item.id !== id));
+}
+
+// READ
+const renderitem = ({ item }) => {
+  if (item.id !== editItem) {
+    return (
+      <view style={styles.tem}>
+        <text style={item.text}>{item.text}</text>
+        <view style={styles.buttons}>
+          <button title='Edit' onPress={() => {setEditItemId(item.id)}}></button>
+          <button title='Delete' onPress={() => deleteItem(item.id)}></button>
+        </view>
+      </view>
+    );
+
+  } else {
+    // Um item está sendo editado
+    return (
+      <view style={styles.item}> 
+        <TextInput
+          style={styles.editInput}
+          value={editItemText}
+          onChangeText={setEditItemText}
+          autoFocus
+        />
+        <button title='Update' onPress={() => {updatedItems(item.id)}}></button>
+      </view>
+    )
+  }
+}
+  
 
   return (
     <View style={styles.container}>
-    <TextInput
-    style={styles.input}
-      value={text}
-      onChangeText={setText}
-      placeholder='Enter text item'
-      />
-      <button
-      title='Add Item'
-      onPress={addItem}
-      />
-
-      <Text style={styles.text}>Olá App React Native - Atualiza!</Text>
+      <TextInput
+        style={styles.input}
+        value={text}
+        onChangeText={setText}
+        placeholder="Enter text item"
+        />
+        <Button 
+        title='Add item'
+        onPress={addItem}
+        />
+        <FlatList
+          data={itens}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          style={styles.list}
+        />
+      <Text style={styles.text}>Olá App React native - atualiza</Text>
       <Image
-        source={{ uri: "https://picsum.photos/200"}}
+        source={{ uri: "https://picsum.photos/200" }}
         style={{ width: 200, height: 200 }}
       />
-      
-      <Text style={styles.text}>Contador: {count}</Text>
-      <View style={styles.buttonContainer}>
-        <Button title="Incrementar" onPress={incrementCounter} />
-        <Button title="Decrementar" onPress={decrementCounter} />
-      </View>
+
       <StatusBar style="auto" />
+      <Text style={styles.text}>Counter: {counter}</Text>
+    
+      <View style={styles.buttonContainer}>
+      <Button title="Increment" onPress={incrementCounter} />
+      <Button title="Decrement" onPress={decrementCounter} />
+      </View>
     </View>
   );
 }
@@ -60,17 +119,46 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
   },
-  text: {
+    text: {
     fontSize: 24,
-    marginBottom: 10,
-  },
+    },
   buttonContainer: {
     flexDirection: 'row',
-    gap: 10,
-    marginTop: 20,
   },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '80%',
+  },
+  list: {
+   marginTop: 20,
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+  },
+  itemText: {
+    flex: 1,
+    marginRight: 10,
+  },
+  buttons: {
+    flexDirection: 'row',
+  },
+  editInput: {
+    flex: 1,
+    marginRight: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+  }
 });
