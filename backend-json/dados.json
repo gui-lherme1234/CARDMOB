@@ -1,28 +1,35 @@
 {
-    "items": [
-      {
-        "id": "1e86",
-        "text": "Novo item"
-      },
-      {
-        "id": "185e",
-        "text": "Novo item"
-      },
-      {
-        "id": "a2a6",
-        "text": "Novo item"
-      },
-      {
-        "id": "bccf",
-        "text": "Novo item"
-      },
-      {
-        "id": "815c",
-        "text": "Novo item"
-      },
-      {
-        "id": "1859",
-        "text": "Novo item"
-      }
-    ]
-  }
+  "items": [
+    {
+      "id": "bcaf",
+      "item": "Leite"
+    }
+  ],
+  "compras": [
+    {
+      "item": "saco",
+      "quantidade": 8,
+      "id": "54b6"
+    },
+    {
+      "id": "ce75",
+      "item": "Rrrr",
+      "quantidade": 4
+    },
+    {
+      "id": "9bf8",
+      "item": "Gesff",
+      "quantidade": 222
+    },
+    {
+      "id": "290c",
+      "items": "frango",
+      "quantidade": 2
+    },
+    {
+      "id": "bb11",
+      "items": "frango",
+      "quantidade": 2
+    }
+  ]
+}
