@@ -1,14 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { ThemeProvider } from './src/contexts/ThemeContext';
+import { ThemeProvider } from './src/contexts/ThemeContext'; // NOVA
+// import HomeScreen from './src/screens/HomeScreen';
+import RootNavigator from './src/navigation/RootNavigator';
+import { AuthProvider } from './src/contexts/AuthContext';
 
-import HomeScreen from './src/screens/HomeScreen';
 
 export default function App() {
   return (
     <ThemeProvider>
-      <HomeScreen/>
+      <AuthProvider>
+        <RootNavigator />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
