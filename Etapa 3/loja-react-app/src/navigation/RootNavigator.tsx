@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator, View } from 'react-native';
 
 import AppNavigator from "./AppNavigator";
-import AuthNavigator from "./AuthNavigator";
+import AuthNavigator from "./authNavigator";
 import { useAuth } from "../contexts/AuthContext";
 
 
