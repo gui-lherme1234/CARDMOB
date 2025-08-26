@@ -2,10 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthStackParamList, AuthTabParamList } from './types';
-
-// Telas do app - área logada.
 import HomeScreen from "../screens/HomeScreen";
-// importar depois que implementar: DetailsScreen, SettingsScreen
 import ProfileScreen from "../screens/auth/ProfileScreen";
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
