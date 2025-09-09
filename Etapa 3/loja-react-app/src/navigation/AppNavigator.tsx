@@ -1,14 +1,21 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { RootStackParamList, TabParamList } from "./types";
 
-// Telas do app - área não logada
+// Telas do app - área não logada.
 import HomeScreen from "../screens/HomeScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
+import CatalogScreen from "../screens/catalog/catalogScreen";
+
+// TODO: Substituir por uma tela real de configurações
+const SettingsScreen = HomeScreen; 
+// TODO: Substituir por uma tela real de detalhes
+const DetailsScreen = HomeScreen; 
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -18,10 +25,10 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size, focused }) => {
-          let iconName: keyof typeof FontAwesome.glyphMap = "circle"; // fallback
+          let iconName: keyof typeof FontAwesome.glyphMap = "question";
 
-          if (route.name === "Home") {
-            iconName = "home";
+          if (route.name === "Catalog") {
+            iconName = "tags";
           } else if (route.name === "Settings") {
             iconName = "cog";
           } else if (route.name === "Register") {
@@ -35,9 +42,21 @@ function TabNavigator() {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={HomeScreen} />
-      <Tab.Screen name="Register" component={RegisterScreen} />
+      <Tab.Screen
+        name="Catalog"
+        component={CatalogScreen}
+        options={{ title: "Menu" }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: "Configurações" }}
+      />
+      <Tab.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ title: "Cadastrar" }}
+      />
     </Tab.Navigator>
   );
 }
@@ -52,7 +71,7 @@ function StackNavigator() {
       />
       <AppStack.Screen
         name="Details"
-        component={HomeScreen}
+        component={DetailsScreen}
         options={{ title: "Detalhes" }}
       />
       <AppStack.Screen
