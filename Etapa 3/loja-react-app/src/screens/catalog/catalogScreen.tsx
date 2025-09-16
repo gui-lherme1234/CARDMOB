@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 import CatalogCard from "../catalog/catalogCard";
-
-// TODO: importar o serviço real de catálogo
-const mockCatalog = [
-  { id: '1', name: 'Produto A', price: 10.99 },
-  { id: '2', name: 'Produto B', price: 15.49 },
-];
+import { getCatalog } from '../services/catalogService'; 
 
 const CatalogScreen = ({ navigation }: any) => {
+  const [catalog, setCatalog] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCatalog = async () => {
+      try {
+        const data = await getCatalog();
+        setCatalog(data);
+      } catch (error) {
+        console.error('Erro ao buscar o catálogo:', error);
+      }
+    };
+
+    fetchCatalog();
+  }, []);
+
+  // Log atualizado sempre que o catálogo mudar
+  useEffect(() => {
+    console.log('Catálogo atualizado:', catalog);
+  }, [catalog]);
 
   const handleBuyPress = (product: any) => {
     // 1 - Adicionar ao carrinho
     // 2 - Ir para a tela do carrinho
-    console.log('Produto selecionado:', product);
+    console.log(product);
   };
 
-  const renderItem = ({ item }: { item: any }) => (
+  const renderItem = ({ item }: any) => (
     <CatalogCard
       product={item}
       onBuyPress={() => handleBuyPress(item)}
@@ -26,11 +40,13 @@ const CatalogScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Menu</Text>
+      <Text>Menu</Text>
       <FlatList
-        data={mockCatalog} // Substituir por dados reais
+        data={catalog}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item: any, index) =>
+          item?.id?.toString() ?? index.toString()
+        }
       />
     </View>
   );
@@ -43,10 +59,5 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     backgroundColor: '#F8F8F8',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
+  }
 });
