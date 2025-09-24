@@ -1,37 +1,45 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+// Tipagens das rotas
 import { RootStackParamList, TabParamList } from './types';
 
-// Telas do app - área não logada.
+// Telas do app - substitua quando necessário
 import HomeScreen from "../screens/HomeScreen";
-// importar depois que implementar: DetailsScreen, SettingsScreen
 import RegisterScreen from "../screens/RegisterScreen";
 import LoginScreen from "../screens/LoginScreen";
 import CatalogScreen from "../screens/catalog/catalogScreen";
 import CartScreen from "../screens/cart/CartScreen";
 
+// Navegadores
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
+// Navegação por abas (Bottom Tabs)
 function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, focused, size }) => {
-          let iconName = "question"; // default icon caso não encontre a rota
-          if (route.name === "Catalog") {
-            iconName = "tags";
-          } else if (route.name === "Cart") {
-            iconName = "shopping-cart";
-          } else if (route.name === "Settings") {
-            iconName = "cog";
-          } else if (route.name === "Register") {
-            iconName = "user-plus";
+        tabBarIcon: ({ color, size }) => {
+          let iconName = "question"; // Ícone padrão
+
+          switch (route.name) {
+            case "Catalog":
+              iconName = "tags";
+              break;
+            case "Cart":
+              iconName = "shopping-cart";
+              break;
+            case "Settings":
+              iconName = "cog";
+              break;
+            case "Register":
+              iconName = "user-plus";
+              break;
           }
+
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "red",
@@ -51,7 +59,7 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="Settings"
-        component={HomeScreen} // substitua por SettingsScreen quando tiver
+        component={HomeScreen} // Substitua por SettingsScreen futuramente
         options={{ title: 'Configurações' }}
       />
       <Tab.Screen
@@ -63,6 +71,7 @@ function TabNavigator() {
   );
 }
 
+// Navegação principal por stack
 function StackNavigator() {
   return (
     <AppStack.Navigator>
@@ -73,7 +82,7 @@ function StackNavigator() {
       />
       <AppStack.Screen
         name="Details"
-        component={HomeScreen} // substitua pelo DetailsScreen quando tiver
+        component={HomeScreen} // Substitua por DetailsScreen futuramente
         options={{ title: 'Detalhes' }}
       />
       <AppStack.Screen
@@ -85,6 +94,7 @@ function StackNavigator() {
   );
 }
 
-export default function AppNavigator() {
+// Exporta o navegador raiz
+export default function RootNavigator() {
   return <StackNavigator />;
 }
