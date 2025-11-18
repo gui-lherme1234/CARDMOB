@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import { useShop } from "../../contexts/ShopContext";
-import { postOrder } from "../../services/CatalogService";
+import { postOrder } from "../../services/catalogService";
 
 const CheckoutScreen = ( {navigation}: any) => {
     const { getTotalPrice, clearCart, cartItems, lastOrderInfo } = useShop();
@@ -34,7 +34,8 @@ const CheckoutScreen = ( {navigation}: any) => {
         clearCart();
         console.log(customerInfo);
         // navigation.navigate('Catalog');
-        navigation.replace('Tabs', {screen: 'Catalog'});
+        // navigation.replace('Tabs', {screen: 'Catalog'});
+        navigation.navigate('OrderInfo');
     }
 
     return (
